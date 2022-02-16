@@ -6,24 +6,34 @@ HighMMT uses multitask learning with shared unimodal and multimodal layers to en
 
 The same HighMMT model (architecture and parameters) is able to simultaneously encode joint representations between different subsets spanning images, text, audio, sets, time-series, and graphs.
 
+## Contributors
+
+Correspondence to: 
+  - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
+  - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
+  - [Xiang Fan](https://github.com/sfanxiang) (xiangfan@cmu.edu)
+  - [Shentong Mo](https://scholar.google.com/citations?user=6aYncPAAAAAJ&hl=en) 
+  - [Dani Yogatama](https://dyogatama.github.io/)
+  - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/)
+  - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/)
 
 
-Usage:
 
-Data Download
+##Usage:
+
+#Data Download
 
 This repo is built on top of the MultiBench repository, so to download the dataset, follow the same instructions as https://github.com/pliang279/MultiBench.git
 
-Easy setting experiment code
+#Easy setting experiment code
 
 TODO: Xiang
 
-Medium setting experiment code:
+#Medium setting experiment code:
 
 TODO: Shentong
 
-Hard setting experiment code:
+#Hard setting experiment code:
 
 To run multitask training on 1/2/3/4 tasks, use singletask.py/twomultitask.py/threemultitask.py/fourmultitask.py respectively in private_test_scripts/perceivers folder
-
 
