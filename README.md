@@ -5,3 +5,15 @@ HighMMT is a general-purpose model for high-modality (large number of modalities
 HighMMT uses multitask learning with shared unimodal and multimodal layers to enable stable parameter counts (addressing scalability) and cross-modal transfer learning to enable information sharing across modalities and tasks (addressing partial observability).
 
 The same HighMMT model (architecture and parameters) is able to simultaneously encode joint representations between different subsets spanning images, text, audio, sets, time-series, and graphs.
+
+## Contributors
+
+Correspondence to: 
+  - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
+  - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
+  - [Xiang Fan](https://github.com/sfanxiang) (xiangfan@cmu.edu)
+  - [Shentong Mo](https://scholar.google.com/citations?user=6aYncPAAAAAJ&hl=en) 
+  - [Dani Yogatama](https://dyogatama.github.io/)
+  - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/)
+  - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/)
+
