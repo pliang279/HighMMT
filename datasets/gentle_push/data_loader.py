@@ -77,18 +77,21 @@ class PushTask():
 
     @classmethod
     def get_dataloader(
-        cls, subsequence_length: int, modalities=None, batch_size=32, drop_last=True, **dataset_args
+        cls, subsequence_length: int, modalities=None, test_multimodal_only=False,
+        batch_size=32, drop_last=True, test_noises=range(10), train_sampler=None, **dataset_args
     ):
         # Load trajectories into memory
         train_trajectories = cls.get_train_trajectories(**dataset_args)
         val_trajectories = cls.get_eval_trajectories(**dataset_args)
         test_trajectories = cls.get_test_trajectories(
-            modalities, **dataset_args)
+            modalities if not test_multimodal_only else ['multimodal'],
+            noises=test_noises, **dataset_args)
         train_loader = DataLoader(
             SubsequenceDataset(train_trajectories,
                                subsequence_length, modalities),
             batch_size=batch_size,
-            shuffle=True,
+            sampler=train_sampler,
+            shuffle=True if train_sampler is None else False,
             drop_last=drop_last,
         )
         val_loader = DataLoader(
@@ -145,7 +148,7 @@ class PushTask():
 
     @classmethod
     def get_test_trajectories(
-        cls, modalities, **dataset_args
+        cls, modalities, noises=range(10), **dataset_args
     ):
 
         kloss_dataset = (
@@ -157,27 +160,27 @@ class PushTask():
             trajectories = dict()
             if modalities == None or 'image' in modalities:
                 trajectories['image'] = []
-                for i in range(10):
+                for i in noises:
                     trajectories['image'].append(_load_trajectories(
                         "gentle_push_300.hdf5", visual_noise=i/10, **dataset_args))
             if modalities == None or 'gripper_pos' in modalities:
                 trajectories['proprio'] = []
-                for i in range(10):
+                for i in noises:
                     trajectories['proprio'].append(_load_trajectories(
                         "gentle_push_300.hdf5", prop_noise=i/10, **dataset_args))
             if modalities == None or 'gripper_sensors' in modalities:
                 trajectories['haptics'] = []
-                for i in range(10):
+                for i in noises:
                     trajectories['haptics'].append(_load_trajectories(
                         "gentle_push_300.hdf5", haptics_noise=i/10, **dataset_args))
             if modalities == None or 'controls' in modalities:
                 trajectories['controls'] = []
-                for i in range(10):
+                for i in noises:
                     trajectories['controls'].append(_load_trajectories(
                         "gentle_push_300.hdf5", controls_noise=i/10, **dataset_args))
-            if modalities == None:
+            if modalities == None or 'multimodal' in modalities:
                 trajectories['multimodal'] = []
-                for i in range(10):
+                for i in noises:
                     trajectories['multimodal'].append(_load_trajectories(
                         "gentle_push_300.hdf5", multimodal_noise=i/10, **dataset_args))
             return trajectories
@@ -604,7 +607,7 @@ def split_trajectories(
                         (
                             o['gripper_pos'],
                             o['gripper_sensors'],
-                            o['image'],
+                            o['image'].reshape([*o['image'].shape, 1]),
                             c,
                             s,
                         )
@@ -617,7 +620,7 @@ def split_trajectories(
                         elif m == 'gripper_sensors':
                             mods.append(o['gripper_sensors'])
                         elif m == 'image':
-                            mods.append(o['image'])
+                            mods.append(o['image'].reshape([*o['image'].shape, 1]))
                         elif m == 'control':
                             mods.append(c)
                     mods.append(s)
