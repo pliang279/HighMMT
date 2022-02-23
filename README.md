@@ -27,7 +27,11 @@ This repo is built on top of the MultiBench repository, so to download the datas
 
 #Easy setting experiment code
 
-TODO: Xiang
+From the root of this repo, run
+```sh
+python private_test_scripts/perceivers/roboticstasks.py model.pt
+```
+The model will be saved to `model.pt`.
 
 #Medium setting experiment code:
 
