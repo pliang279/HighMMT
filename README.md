@@ -19,13 +19,13 @@ Correspondence to:
 
 
 
-##Usage:
+## Usage
 
-#Data Download
+### Data Download
 
 This repo is built on top of the MultiBench repository, so to download the dataset, follow the same instructions as https://github.com/pliang279/MultiBench.git
 
-#Easy setting experiment code
+### Easy setting experiment code
 
 From the root of this repo, run
 ```sh
@@ -33,11 +33,11 @@ python private_test_scripts/perceivers/roboticstasks.py model.pt
 ```
 The model will be saved to `model.pt`.
 
-#Medium setting experiment code:
+### Medium setting experiment code
 
 TODO: Shentong
 
-#Hard setting experiment code:
+### Hard setting experiment code
 
 To run multitask training on 1/2/3/4 tasks, use singletask.py/twomultitask.py/threemultitask.py/fourmultitask.py respectively in private_test_scripts/perceivers folder
 
