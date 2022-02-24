@@ -35,7 +35,10 @@ The model will be saved to `model.pt`.
 
 ### Medium setting experiment code
 
-TODO: Shentong
+To run medium tasks, please run
+```
+python private_test_scripts/perceivers/medium_tasks.py
+```
 
 ### Hard setting experiment code
 
