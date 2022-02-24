@@ -12,7 +12,7 @@ Correspondence to:
   - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
   - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
   - [Xiang Fan](https://github.com/sfanxiang) (xiangfan@cmu.edu)
-  - [Shentong Mo](https://scholar.google.com/citations?user=6aYncPAAAAAJ&hl=en) 
+  - [Shentong Mo](https://scholar.google.com/citations?user=6aYncPAAAAAJ&hl=en) (shentonm@andrew.cmu.edu)
   - [Dani Yogatama](https://dyogatama.github.io/)
   - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/)
   - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/)
