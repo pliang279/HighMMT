@@ -6,6 +6,22 @@ HighMMT uses multitask learning with shared unimodal and multimodal layers to en
 
 The same HighMMT model (architecture and parameters) is able to simultaneously encode joint representations between different subsets spanning images, text, audio, sets, time-series, and graphs.
 
+## Paper
+
+[**HighMMT: Towards Modality and Task Generalization for High-Modality Representation Learning**](https://arxiv.org/abs/2203.01311)<br>
+Paul Pu Liang, Yiwei Lyu, Xiang Fan, Shengtong Mo, Dani Yogatama, Louis-Philippe Morency, Ruslan Salakhutdinov<br>
+arXiv 2022.
+
+If you find this repository useful, please cite our paper:
+```
+@inproceedings{liang2022highmmt,
+  title={HighMMT: Towards Modality and Task Generalization for High-Modality Representation Learning},
+  author={Liang, Paul Pu and Lyu, Yiwei and Fan, Xiang and Mo, Shengtong and Yogatama, Dani and Morency, Louis-Philippe and Salakhutdinov, Ruslan},
+  booktitle={arXiv},
+  year={2022}
+}
+```
+
 ## Contributors
 
 Correspondence to: 
@@ -16,8 +32,6 @@ Correspondence to:
   - [Dani Yogatama](https://dyogatama.github.io/)
   - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/)
   - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/)
-
-
 
 ## Usage
 
