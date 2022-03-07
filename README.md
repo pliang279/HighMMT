@@ -56,5 +56,10 @@ python private_test_scripts/perceivers/medium_tasks.py
 
 ### Hard setting experiment code
 
-To run multitask training on 1/2/3/4 tasks, use singletask.py/twomultitask.py/threemultitask.py/fourmultitask.py respectively in private_test_scripts/perceivers folder
-
+To run multitask training on 1/2/3/4 tasks, please run
+```
+python private_test_scripts/perceivers/singletask.py
+python private_test_scripts/perceivers/twomultitask.py
+python private_test_scripts/perceivers/threemultitask.py
+python private_test_scripts/perceivers/fourmultitask.py
+```
