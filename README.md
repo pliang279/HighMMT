@@ -14,10 +14,10 @@ arXiv 2022.
 
 If you find this repository useful, please cite our paper:
 ```
-@inproceedings{liang2022highmmt,
+@article{liang2022highmmt,
   title={HighMMT: Towards Modality and Task Generalization for High-Modality Representation Learning},
   author={Liang, Paul Pu and Lyu, Yiwei and Fan, Xiang and Mo, Shengtong and Yogatama, Dani and Morency, Louis-Philippe and Salakhutdinov, Ruslan},
-  booktitle={arXiv},
+  journal={arXiv preprint arXiv:2203.01311},
   year={2022}
 }
 ```
