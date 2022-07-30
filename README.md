@@ -39,6 +39,10 @@ Correspondence to:
 
 This repo is built on top of the MultiBench repository, so to download the dataset, follow the same instructions as https://github.com/pliang279/MultiBench.git
 
+### perceiver_pytorch installation
+
+Please refer to https://github.com/fac2003/perceiver-multi-modality-pytorch to install the perceiver_pytorch module.
+
 ### Easy setting experiment code
 
 From the root of this repo, run
