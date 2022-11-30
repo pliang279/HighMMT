@@ -36,11 +36,34 @@ Correspondence to:
   - [Ruslan Salakhutdinov](https://www.cs.cmu.edu/~rsalakhu/)
 
 ## Usage
+### Environment Setup Using Conda
+```
+conda env create -f env_HighMMT.yml
+```
+###
+
+### Quick Start
+The instructions for running the code and data retreival can be found after typing
+```
+./run.sh help
+```
+You can also find detailed instructions below
+###
 
 ### Data Download
-
+three datasets: robotics, enrico and RTFM can be setup directly using script ./download_datasets.sh
+Run 
+```
+./download_datasets.sh help
+```
+for instructions
+To setup each dataset, run "./download_datasets.sh <datasetname>"
+For example
+```
+./download_datasets.sh robotics
+```
+downloads the robotics dataset to the directory datasets/robotics
 This repo is built on top of the MultiBench repository, so to download the dataset, follow the same instructions as https://github.com/pliang279/MultiBench.git
-
 ### Easy setting experiment code
 
 From the root of this repo, run
