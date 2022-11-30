@@ -28,6 +28,8 @@ Correspondence to:
   - [Paul Pu Liang](http://www.cs.cmu.edu/~pliang/) (pliang@cs.cmu.edu)
   - [Yiwei Lyu](https://github.com/lvyiwei1) (ylyu1@andrew.cmu.edu)
   - [Xiang Fan](https://github.com/sfanxiang) (xiangfan@cmu.edu)
+  - [Jeffrey Tsaw](https://github.com/jeffreytsaw) (jtsaw@andrew.cmu.edu)
+  - [Yudong Liu] (https://github.com/jeffreytsaw) (yudongl@andrew.cmu.edu)
   - [Shentong Mo](https://scholar.google.com/citations?user=6aYncPAAAAAJ&hl=en) (shentonm@andrew.cmu.edu)
   - [Dani Yogatama](https://dyogatama.github.io/)
   - [Louis-Philippe Morency](https://www.cs.cmu.edu/~morency/)
@@ -38,10 +40,6 @@ Correspondence to:
 ### Data Download
 
 This repo is built on top of the MultiBench repository, so to download the dataset, follow the same instructions as https://github.com/pliang279/MultiBench.git
-
-### perceiver_pytorch installation
-
-Please refer to https://github.com/fac2003/perceiver-multi-modality-pytorch to install the perceiver_pytorch module.
 
 ### Easy setting experiment code
 
@@ -66,4 +64,21 @@ python private_test_scripts/perceivers/singletask.py
 python private_test_scripts/perceivers/twomultitask.py
 python private_test_scripts/perceivers/threemultitask.py
 python private_test_scripts/perceivers/fourmultitask.py
+```
+
+### Parameter Sharing Experiments
+To run the parameter sharing experiments, please run 
+```
+python private_test_scripts/perceivers/shared_fourmulti.py
+```
+
+A baseline can be trained as a starting point for finetuning by running the fourmultitask.py file like described above. You can specify the baseline in shared_fourmulti.py. 
+
+Parameter groupings can also be specified in the shared_fourmulti.py file.
+
+### Heterogeneity Matrix 
+
+To run get the heterogeneity matrix between individual modalitiesa and pairs of modalities, please run
+```
+python private_test_scripts/perceivers/tasksim.py
 ```

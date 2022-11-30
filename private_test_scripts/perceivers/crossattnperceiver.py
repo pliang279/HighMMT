@@ -139,7 +139,7 @@ class MultiModalityPerceiver(nn.Module):
         
         self.recon=recon
 
-    def forward(self, multi_modality_data: Dict[str, Tensor], mask=None, use_recon=False):
+    def forward(self, multi_modality_data: Dict[str, Tensor], mask=None, use_recon=False, get_latent=False, get_pre_logits=False, latents=None, source_mode=None, get_catted=False, unimodal=False, null_pvi=False):
         """
         :param data: a dictionary where keys are modality names and Tensor contain a batch
         of modality input data.
@@ -151,63 +151,90 @@ class MultiModalityPerceiver(nn.Module):
         linearized_data = []
         linearized_data_per_layer: Dict[int, List[Tensor]] = {}
         latentout=[]
-        self.attns={}
-        for _, modality_name in enumerate(sorted(multi_modality_data.keys())):
-            #assert modality_name in self.modalities, f"modality {modality_name} was not defined in constructor"
-            data = multi_modality_data[modality_name]
-            modality,modality_index = findmodalityandindex(self.modalities,modality_name)
-            #print(data.shape)
+        #self.attns={}
+        if not get_pre_logits:
+            for _, modality_name in enumerate(sorted(multi_modality_data.keys())):
+                #assert modality_name in self.modalities, f"modality {modality_name} was not defined in constructor"
+                data = multi_modality_data[modality_name]
+                modality,modality_index = findmodalityandindex(self.modalities,modality_name)
+                if source_mode != None:
+                    _, source_index = findmodalityandindex(self.modalities, source_mode)
+                #print(data.shape)
 
-            b, *axis, _, device = *data.shape, data.device
-            assert len(
-                axis) == modality.input_axis, f'input data must have the right number of  for modality {modality_name}. ' \
+                b, *axis, _, device = *data.shape, data.device
+                assert len(
+                    axis) == modality.input_axis, f'input data must have the right number of  for modality {modality_name}. ' \
                                               f'Expected {modality.input_axis} while forward argument offered {len(axis)}'
-            batch_sizes.add(b)
-            assert len(batch_sizes) == 1, "batch size must be the same across all modalities"
-            # calculate fourier encoded positions in the range of [-1, 1], for all axis
+                batch_sizes.add(b)
+                assert len(batch_sizes) == 1, "batch size must be the same across all modalities"
+                # calculate fourier encoded positions in the range of [-1, 1], for all axis
 
-            axis_pos = list(map(lambda size: torch.linspace(-1., 1., steps=size, device=device), axis))
-            pos = torch.stack(torch.meshgrid(*axis_pos), dim=-1)
-            enc_pos = fourier_encode(pos,
+                axis_pos = list(map(lambda size: torch.linspace(-1., 1., steps=size, device=device), axis))
+                pos = torch.stack(torch.meshgrid(*axis_pos), dim=-1)
+                enc_pos = fourier_encode(pos,
                                      modality.max_freq, modality.num_freq_bands, modality.freq_base)
-            enc_pos = rearrange(enc_pos, '... n d -> ... (n d)')
-            enc_pos = repeat(enc_pos, '... -> b ...', b=b)
-            #print(enc_pos.size())
+                enc_pos = rearrange(enc_pos, '... n d -> ... (n d)')
+                enc_pos = repeat(enc_pos, '... -> b ...', b=b)
+                #print(enc_pos.size())
 
-            # Figure out padding for this modality, given max dimension across all modalities:
-            padding_size = self.max_modality_dim - modality.input_dim - self.modality_encoding_dim
+                # Figure out padding for this modality, given max dimension across all modalities:
+                padding_size = self.max_modality_dim - modality.input_dim - self.modality_encoding_dim
 
-            padding = torch.zeros(size=data.size()[0:-1] + (padding_size,)).to(device)
-            # concat to channels of data and flatten axis
-            modality_encodings = modality_encoding(b, axis, modality_index, num_modalities, embed=self.embed, device=device)
+                padding = torch.zeros(size=data.size()[0:-1] + (padding_size,)).to(device)
+                # concat to channels of data and flatten axis
+                modality_encodings = modality_encoding(b, axis, modality_index, num_modalities, embed=self.embed, device=device)
 
-            #print(modality_encodings.size())
+                if source_mode != None:
+                    modality_encodings = modality_encoding(b, axis, source_index, num_modalities, embed=self.embed, device=device)
 
-            to_concat = (data, padding, enc_pos, modality_encodings)
+                #print(modality_encodings.size())
+
+                to_concat = (data, padding, enc_pos, modality_encodings)
 
 
-            data = torch.cat(to_concat, dim=-1)
-            #print(data.size())
-            data = rearrange(data, 'b ... d -> b (...) d')
-            #print(data.size())
-            #print(data.size())
-            #linearized_data.append(data)
+                data = torch.cat(to_concat, dim=-1)
+                #print(data.shape)
+                #print(data.size())
+                data = rearrange(data, 'b ... d -> b (...) d')
+                #print(data.shape)
+                #print(data.size())
+                #print(data.size())
+                #linearized_data.append(data)
         
-            b = batch_sizes.pop()
-            x = repeat(self.latents, 'n d -> b n d', b=b)
+                b = batch_sizes.pop()
+                x = repeat(self.latents, 'n d -> b n d', b=b)
         
-            # Concatenate all the modalities:
-            #data = torch.cat(linearized_data, dim=1)
+                # Concatenate all the modalities:
+                #data = torch.cat(linearized_data, dim=1)
 
-            for cross_attn, cross_ff, latent_transformer in self.layers:
-                x = cross_attn(x, context=data, mask=mask) + x
-                self.attns[modality_name]=cross_attn.fn.printattn
-                x = cross_ff(x) + x
-                x = latent_transformer(x) + x
-            #x = self.pool(x)
-            latentout.append(x)
+                #print(x.shape)
+
+                for cross_attn, cross_ff, latent_transformer in self.layers:
+                    x = cross_attn(x, context=data, mask=mask) + x
+                    #self.attns[modality_name]=cross_attn.fn.printattn
+                    x = cross_ff(x) + x
+                    x = latent_transformer(x) + x
+                #x = self.pool(x)
+                #print(x.shape)
+                latentout.append(x)
+
+            if get_latent:
+                return latentout[0]
+    
+        #print(latentout[0].shape, latentout[0].flatten(start_dim=1).shape)
 
         outs=[]
+        #cross attention layer
+        if get_pre_logits:
+            latentout = latents
+            x=latentout[0]
+            context=latentout[1]
+            for cross_attn, cross_ff, latent_transformer in self.cross_layers:
+                x = cross_attn(x, context=context, mask=mask) + x
+                x = cross_ff(x) + x
+                x = latent_transformer(x) + x
+            return x[:, -1]
+
         for i in range(len(latentout)):
             for j in range(len(latentout)):
                 if i==j:
@@ -219,12 +246,21 @@ class MultiModalityPerceiver(nn.Module):
                     x = cross_ff(x) + x
                     x = latent_transformer(x) + x
                 outs.append(x[:,-1])
-
+            
         if len(outs)==0:
             catted = latentout[0].flatten(start_dim=1)
         else:
             catted=torch.cat(outs,dim=1)
+
+        #if get_latent:
+            #return catted
+
+        #print('catted shape: {}'.format(catted.shape))
         if (self.recon is not None) and use_recon:
             return self.to_logits(catted),self.recon(catted)
+        elif get_catted or get_pre_logits:
+            return catted
+        elif null_pvi:
+            return self.to_logits(torch.zeros(catted.shape).to(device))
         return self.to_logits(catted)
 
