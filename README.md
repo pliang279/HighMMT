@@ -8,16 +8,16 @@ The same HighMMT model (architecture and parameters) is able to simultaneously e
 
 ## Paper
 
-[**HighMMT: Towards Modality and Task Generalization for High-Modality Representation Learning**](https://arxiv.org/abs/2203.01311)<br>
+[**High-Modality Multimodal Transformer: Quantifying Modality \& Interaction Heterogeneity for High-Modality Representation Learning**](https://openreview.net/forum?id=ttzypy3kT7)<br>
 Paul Pu Liang, Yiwei Lyu, Xiang Fan, Shentong Mo, Dani Yogatama, Louis-Philippe Morency, Ruslan Salakhutdinov<br>
-arXiv 2022.
+TMLR 2022.
 
 If you find this repository useful, please cite our paper:
 ```
-@article{liang2022highmmt,
-  title={HighMMT: Towards Modality and Task Generalization for High-Modality Representation Learning},
-  author={Liang, Paul Pu and Lyu, Yiwei and Fan, Xiang and Mo, Shentong and Yogatama, Dani and Morency, Louis-Philippe and Salakhutdinov, Ruslan},
-  journal={arXiv preprint arXiv:2203.01311},
+@article{liang2022high,
+  title={High-Modality Multimodal Transformer: Quantifying Modality \& Interaction Heterogeneity for High-Modality Representation Learning},
+  author={Liang, Paul Pu and Lyu, Yiwei and Fan, Xiang and Tsaw, Jeffrey and Liu, Yudong and Mo, Shentong and Yogatama, Dani and Morency, Louis-Philippe and Salakhutdinov, Russ},
+  journal={Transactions on Machine Learning Research},
   year={2022}
 }
 ```
