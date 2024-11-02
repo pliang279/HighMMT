@@ -8,7 +8,7 @@ def train(model,epochs,trains,valid,test,modalities,savedir,lr=0.001,weight_deca
         valid_criterions = criterions
     if test_criterions is None:
         test_criterions = valid_criterions
-    '''
+    #'''
     optim = optimizer(model.parameters(),lr=lr,weight_decay=weight_decay)
     bestacc=-999999999
     for ep in range(epochs):
@@ -119,7 +119,7 @@ def train(model,epochs,trains,valid,test,modalities,savedir,lr=0.001,weight_deca
                 print("save best")
                 bestacc=accs
                 torch.save(model,savedir)
-    '''
+    #'''
     model=torch.load(savedir).to(device)
     with torch.no_grad():
         for ii in range(len(test)):
